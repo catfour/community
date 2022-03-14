@@ -13,6 +13,15 @@ spring:
       max-active: 20
       # 配置获取连接等待超时的时间（毫秒）
       max-wait: 60000
+  #邮箱配置
+  mail:
+    host: smtp.qq.com
+    port: 465
+    username: 1543977012@qq.com
+    password: nkxmiarxpnkxicih  #第三方客户端的授权码，不是qq邮箱的登录密码
+    protocol: smtps
+    properties.mail.smtp.ssl.enable: true #开启SSL
+    default-encoding: utf-8
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
@@ -22,3 +31,12 @@ mybatis:
 logging:
   level:
     com.atguigu.community.Dao: debug
+
+#community
+community:
+  path:
+    domain: http://localhost:8080
+server:
+  port: 8080
+  servlet:
+    context-path: /community
