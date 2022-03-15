@@ -2,12 +2,14 @@ package com.atguigu.community.service;
 
 import com.atguigu.community.Dao.UserMapper;
 import com.atguigu.community.entity.User;
+import com.atguigu.community.util.ActivationStatus;
 import com.atguigu.community.util.CommunityUtil;
 import com.atguigu.community.util.MailClient;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
@@ -17,7 +19,7 @@ import java.util.Map;
 import java.util.Random;
 
 @Service
-public class UserService {
+public class UserService implements ActivationStatus {
 
     @Autowired
     private UserMapper userMapper;
@@ -25,7 +27,7 @@ public class UserService {
     @Autowired
     private TemplateEngine templateEngine;
 
-    @Value("${community.path.domain}")
+    @Value(value = "${community.path.domain}")
     private String domain;
 
     @Value("${server.servlet.context-path}")
@@ -96,11 +98,25 @@ public class UserService {
         //需要拼接http://www.nowcoder.com/activation/abcdefg123456.html
         String url = domain + contextPath +"/activation/" + user.getId() +"/"+user.getActivationCode();
 
-        context.setVariable("url",url);
+        context.setVariable("activationUrl",url);
         //模板引擎处理
         String content = templateEngine.process("/mail/activation",context);
         mailClient.sendMail(user.getEmail(),"激活账号",content);
 
         return map;
+    }
+
+
+    public int activation(int userId,String code){
+        User user = userMapper.selectById(userId);
+        System.out.println(user);
+        if(user.getStatus() ==  1){
+            return ACTIVATION_REPEAT;
+        }else if(user.getActivationCode().equals(code)){
+            userMapper.updateStatus(1,userId);
+            return ACTIVATION_SUCCESS;
+        }else{
+            return ACTIVATION_FAILURE;
+        }
     }
 }

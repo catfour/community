@@ -17,18 +17,18 @@ public interface UserMapper {
     //读取主键
     @Insert("insert into user (username,password,salt,email,type,status,activation_code,header_url,create_time) " +
             "values(#{username},#{password},#{salt},#{email},#{type},#{status},#{activationCode},#{headerUrl},#{createTime})")
-    @Options(useGeneratedKeys = true)
+    @Options(useGeneratedKeys = true,keyProperty = "id")
     int insertUser( User user);
 
     @Update("update user set status = #{status} where id = #{id}")
-    int updateStatus(@Param("status") Integer status,@Param("id") Integer id);
+    int updateStatus(@Param("status") int status, @Param("id") int id);
 
     @Update("update user set header_url = #{headerUrl} where id = #{id}")
-    int updateHeader(@Param("headerUrl") String headerUrl,@Param("id") Integer id);
+    int updateHeader(@Param("headerUrl") String headerUrl, @Param("id") int id);
 
     @Update("update user set password = #{password} where id = #{id}")
-    int updatePassword(@Param("password") String password,@Param("id") Integer id);
+    int updatePassword(@Param("password") String password,@Param("id") int id);
 
     @Delete("delete from user where id = #{id}")
-    int deleteUser(Integer id);
+    int deleteUser(int id);
 }
