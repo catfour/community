@@ -35,9 +35,10 @@ logging:
 
 #community
 community:
-  path：
+  path:
     domain: http://localhost:8080
 server:
   port: 8080
   servlet:
     context-path: /community
+
