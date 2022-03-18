@@ -166,4 +166,8 @@ public class UserService implements CommunityConstant {
         //0代表正常，-1代表失效
         loginTicketMapper.update(ticket,-1);
     }
+
+    public LoginTicket findLoginTicket(String ticket) {
+        return loginTicketMapper.select(ticket);
+    }
 }
