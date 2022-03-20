@@ -170,4 +170,10 @@ public class UserService implements CommunityConstant {
     public LoginTicket findLoginTicket(String ticket) {
         return loginTicketMapper.select(ticket);
     }
+
+    public int update(int id, String newPassword){
+
+        User user = userMapper.selectById(id);
+        return userMapper.updatePassword(CommunityUtil.md5(newPassword + user.getSalt()), id);
+    }
 }

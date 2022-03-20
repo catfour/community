@@ -101,6 +101,7 @@ public class LoginController implements CommunityConstant {
             logger.error("响应验证码失败" + e.getMessage());
         }
     }
+
     @RequestMapping(path = "/login",method = RequestMethod.POST)
     public String login(String username, String password, String code,boolean rememberMe,
                                     HttpServletResponse response,HttpSession session,Model model){
