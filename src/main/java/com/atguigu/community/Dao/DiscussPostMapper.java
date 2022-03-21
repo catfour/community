@@ -1,10 +1,7 @@
 package com.atguigu.community.Dao;
 
 import com.atguigu.community.entity.DiscussPost;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.SelectProvider;
+import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.jdbc.SQL;
 
 import java.util.List;
@@ -17,6 +14,16 @@ public interface DiscussPostMapper {
 
     @SelectProvider(type = DiscussPostSqlProvider.class, method = "selectDiscussPostsRows")
     int selectDiscussPostsRows(@Param("userId") int userId);
+
+    @Insert({
+            "insert into discuss_post(user_id,title,content,type,status,create_time,comment_count,score) ",
+            "values(#{userId},#{title},#{content},#{type},#{status},#{createTime},#{commentCount},#{score})"
+    })
+    @Options(useGeneratedKeys = true,keyProperty = "id")
+    int insertDiscussPost(DiscussPost discussPost);
+
+    @Select("select * from discuss_post where id=#{id}")
+    DiscussPost selectDiscussPostById(int id);
 
 
     class DiscussPostSqlProvider{

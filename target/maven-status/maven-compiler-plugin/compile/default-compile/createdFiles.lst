@@ -13,6 +13,7 @@ com\atguigu\community\util\CommunityUtil.class
 com\atguigu\community\controller\UserController.class
 com\atguigu\community\util\MailClient.class
 com\atguigu\community\controller\HomeController.class
+com\atguigu\community\controller\DiscussPostController.class
 com\atguigu\community\controller\LoginController.class
 com\atguigu\community\entity\DiscussPost.class
 com\atguigu\community\util\CommunityConstant.class
