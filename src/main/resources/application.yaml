@@ -47,4 +47,9 @@ server:
   servlet:
     context-path: /community
 
-
+#分页插件的配置
+pagehelper:
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
+  helper-dialect: mysql

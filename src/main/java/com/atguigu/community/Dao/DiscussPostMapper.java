@@ -25,6 +25,11 @@ public interface DiscussPostMapper {
     @Select("select * from discuss_post where id=#{id}")
     DiscussPost selectDiscussPostById(int id);
 
+    @Update({
+            "update discuss_post set comment_count=#{commentCount} where id=#{id}"
+    })
+    int updateCommentCount(int id, int commentCount);
+
 
     class DiscussPostSqlProvider{
 //        public static String selectDiscussPosts(final Integer userId,final Integer offset,final  Integer limit){
