@@ -191,7 +191,9 @@
 				<!-- 分页 -->
 				<nav class="mt-5">
 					<ul class="pagination justify-content-center">
-						<li class="page-item"><a class="page-link" th:href="@{'/discuss/detail/'+${post.id}(pageNum=1,pageSize=5)}">首页</a></li>
+						<li th:class="|page-item ${pageInfo.pageNum==1?'disabled':''}|">
+							<a class="page-link" th:href="@{'/discuss/detail/'+${post.id}(pageNum=1,pageSize=5)}">首页</a>
+						</li>
 						<li th:class="|page-item ${pageInfo.pageNum==1?'disabled':''}|">
 							<a class="page-link" th:href="@{'/discuss/detail/'+${post.id}(pageNum=${pageInfo.pageNum - 1},pageSize=5)}">上一页</a>
 						</li>
@@ -201,7 +203,7 @@
 						<li th:class="|page-item ${pageInfo.pages==pageInfo.pageNum?'disabled':''}|">
 							<a class="page-link" th:href="@{'/discuss/detail/'+${post.id}(pageNum=${pageInfo.pageNum + 1},pageSize=5)}">下一页</a>
 						</li>
-						<li class="page-item ">
+						<li th:class="|page-item ${pageInfo.pages==pageInfo.pageNum?'disabled':''}|">
 							<a class="page-link" th:href="@{'/discuss/detail/'+${post.id}(pageNum=${pageInfo.pages},pageSize=5)}">末页</a>
 						</li>
 					</ul>
