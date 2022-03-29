@@ -20,6 +20,12 @@ public class CommentVO {
     //记录条数
     private int count;
 
+    //点赞数
+    private long likeCount;
+
+    //点赞状态
+    private int likeStatus;
+
     //每条评论对应的回复列表,每条回复
     private List<CommentVO> replyVOList;
 

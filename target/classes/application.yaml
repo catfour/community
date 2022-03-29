@@ -26,6 +26,11 @@ spring:
     hiddenmethod:
       filter:
         enabled: true   #开启Restful风格的配置
+  #redis设置
+  redis:
+    host: 192.168.247.131
+    port: 6379
+    database: 10
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
