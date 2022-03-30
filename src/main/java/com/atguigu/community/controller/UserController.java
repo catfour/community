@@ -3,8 +3,10 @@ package com.atguigu.community.controller;
 import com.atguigu.community.Dao.UserMapper;
 import com.atguigu.community.annotation.LoginRequired;
 import com.atguigu.community.entity.User;
+import com.atguigu.community.service.FollowService;
 import com.atguigu.community.service.LikeService;
 import com.atguigu.community.service.UserService;
+import com.atguigu.community.util.CommunityConstant;
 import com.atguigu.community.util.CommunityUtil;
 import com.atguigu.community.util.HostHolder;
 import org.apache.commons.lang3.StringUtils;
@@ -30,7 +32,7 @@ import java.io.*;
 
 @Controller
 @RequestMapping("/user")
-public class UserController {
+public class UserController implements CommunityConstant {
     private Logger logger = LoggerFactory.getLogger(UserController.class);
     @Autowired
     private HostHolder hostHolder;
@@ -43,6 +45,9 @@ public class UserController {
 
     @Autowired
     private LikeService likeService;
+
+    @Autowired
+    private FollowService followService;
 
     @Value("${community.path.upload}")
     private String uploadPath;
@@ -170,6 +175,19 @@ public class UserController {
         //点赞数量
         int likeCount = likeService.findUserLikeCount(userId);
         model.addAttribute("likeCount",likeCount);
+
+        //查询关注实体的数量
+        long followeeCount = followService.findFolloweeCount(userId,ENTITY_TYPE_USER);
+        model.addAttribute("followeeCount",followeeCount);
+        //查询粉丝数量
+        long followerCount = followService.findFollowerCount(ENTITY_TYPE_USER,userId);
+        model.addAttribute("followerCount",followerCount);
+        //查询是否关注该实体
+        boolean hasFollowed = false;
+        if(hostHolder.getUser() != null){
+            hasFollowed = followService.hasFollowed(hostHolder.getUser().getId(),ENTITY_TYPE_USER,userId);
+        }
+        model.addAttribute("hasFollowed",hasFollowed);
         return "/site/profile" ;
     }
 }
